@@ -5,14 +5,9 @@ const Tag = require('./Tag');
 const ProductTag = require('./ProductTag');
 
 
-// Product.hasOne(Category , {
-//   foreignKey: 'category_id',
-//   onDelete: 'CASCADE',
-// });
-
 Category.hasMany(Product , {
   foreignKey: 'category_id',
-  onDelete: 'CASCADE',
+  onDelete: 'SET NULL',
 });
 
 Product.belongsTo(Category, {
@@ -24,27 +19,14 @@ Product.belongsTo(Category, {
 
 Tag.belongsToMany(Product, {
   // Define the third table needed to store the foreign keys
-  through: {
-    model: ProductTag,
-    unique: false
-  },
-  // Define an alias for when data is retrieved
-  as: 'tags'
+  through: ProductTag
 });
+
 
 Product.belongsToMany(Tag, {
   // Define the third table needed to store the foreign keys
-  through: {
-    model: ProductTag,
-    unique: false
-  },
-  // Define an alias for when data is retrieved
-  as: 'wookilar'
+  through: ProductTag
 });
-
-
-
-
 
 
 module.exports = {
